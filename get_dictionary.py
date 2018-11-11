@@ -5,6 +5,7 @@ import argparse
 import torch
 import pickle
 from src.utils import bool_flag, initialize_exp
+import codecs
 
 parser = argparse.ArgumentParser(description='Unsupervised training')
 parser.add_argument("--src_emb", type=str, default="", help="Reload source embeddings")
@@ -39,20 +40,16 @@ def load_vec(emb_path, nmax=50000):
     return embeddings, id2word, word2id
 
 if __name__ == '__main__':
-    f = open(params.output, "w")
-    embeddings, id2word, word2id = load_vec(params.src_emb)
-    for id in id2word:
-        f.write(id2word[id] + "\n")
-    # src_word_embs, src_id2word, src_word2id = load_vec(params.src_emb)
-    # tgt_word_embs, tgt_id2word, tgt_word2id = load_vec(params.tgt_emb)
-    # src_word_embs = torch.FloatTensor(src_word_embs).cuda()
-    # tgt_word_embs = torch.FloatTensor(tgt_word_embs).cuda()
-    # dictionary = build_dictionary(src_emb=src_word_embs, tgt_emb=tgt_word_embs, params=params)
-    # f = open(params.output, "w")
-    # for k, (i, j) in enumerate(dictionary):
-    #     s_word = src_id2word[i]
-    #     t_word = tgt_id2word[j]
-    #     f.write(s_word.encode("utf-8") + " " + t_word.encode("utf-8") + "\n")
-    #     print(k)
-    # print(dictionary.shape)
-    # print(dictionary[0])
+    src_word_embs, src_id2word, src_word2id = load_vec(params.src_emb)
+    tgt_word_embs, tgt_id2word, tgt_word2id = load_vec(params.tgt_emb)
+    src_word_embs = torch.FloatTensor(src_word_embs).cuda()
+    tgt_word_embs = torch.FloatTensor(tgt_word_embs).cuda()
+    dictionary = build_dictionary(src_emb=src_word_embs, tgt_emb=tgt_word_embs, params=params)
+    f = codecs.open(params.output, 'w', encoding='utf8')
+    for k, (i, j) in enumerate(dictionary):
+        s_word = src_id2word[i]
+        t_word = tgt_id2word[j]
+        f.write(s_word.encode("utf-8") + " " + t_word.encode("utf-8") + "\n")
+        print(k)
+    print(dictionary.shape)
+    print(dictionary[0])
