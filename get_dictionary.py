@@ -49,7 +49,7 @@ if __name__ == '__main__':
     for k, (i, j) in enumerate(dictionary):
         s_word = src_id2word[i]
         t_word = tgt_id2word[j]
-        f.write(s_word.encode("utf-8") + " " + t_word.encode("utf-8") + "\n")
+        f.write(s_word + " " + t_word + "\n")
         print(k)
     print(dictionary.shape)
     print(dictionary[0])
