@@ -164,6 +164,8 @@ def build_dictionary(src_emb, tgt_emb, params, s2t_candidates=None, t2s_candidat
     else:
         s2t_candidates = set([(a, b) for a, b in s2t_candidates.numpy()])
         t2s_candidates = set([(a, b) for a, b in t2s_candidates.numpy()])
+        print("num of s2t candidates", len(s2t_candidates))
+        print("num of t2s candidates", len(t2s_candidates))
         if params.dico_build == 'S2T|T2S':
             final_pairs = s2t_candidates | t2s_candidates
         else:
