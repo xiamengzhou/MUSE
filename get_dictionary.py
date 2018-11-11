@@ -43,11 +43,12 @@ if __name__ == '__main__':
     tgt_word_embs, tgt_id2word, tgt_word2id = load_vec(params.tgt_emb)
     src_word_embs = torch.FloatTensor(src_word_embs).cuda()
     tgt_word_embs = torch.FloatTensor(tgt_word_embs).cuda()
-    d = build_dictionary(src_emb=src_word_embs, tgt_emb=tgt_word_embs, params=params)
+    dictionary = build_dictionary(src_emb=src_word_embs, tgt_emb=tgt_word_embs, params=params)
     f = open(params.output, "w")
-    for i, j in enumerate(d):
+    for k, (i, j) in enumerate(dictionary):
         s_word = src_id2word[i]
         t_word = tgt_id2word[j]
-        f.write(s_word + " " + t_word + "\n")
-    print(d.shape)
-    print(d[0])
+        f.write(s_word.encode("utf-8") + " " + t_word.encode("utf-8") + "\n")
+        print(k)
+    print(dictionary.shape)
+    print(dictionary[0])
