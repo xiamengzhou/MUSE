@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="15f9c915-0185-45f0-b54c-c4f7eb5a29f1" name="junjieh@ec2-54-244-6-247.us-west-2.compute.amazonaws.com" url="http://ec2-54-244-6-247.us-west-2.compute.amazonaws.com">
+        <fileTransfer host="ec2-54-244-6-247.us-west-2.compute.amazonaws.com" port="22" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
