@@ -18,7 +18,6 @@ from src.models import build_model
 from src.trainer import Trainer
 from src.evaluation import Evaluator
 
-
 VALIDATION_METRIC = 'mean_cosine-csls_knn_10-S2T-10000'
 
 
