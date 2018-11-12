@@ -1,3 +1,11 @@
+"""
+python3 get_dictionary.py --src_emb /home/junjieh/mengzhox/MUSE/deen_re5/debug/snoen9clns/vectors-de.txt \
+                          --tgt_emb /home/junjieh/mengzhox/MUSE/deen_re5/debug/snoen9clns/vectors-en.txt \
+                          --output /home/junjieh/mengzhox/MUSE/deen_re5/debug/snoen9clns/de-en-S2T-T2S-all \
+                          --dico_build "S2T&T2S"
+"""
+
+
 from src.dico_builder import build_dictionary
 import numpy as np
 import io
@@ -22,7 +30,7 @@ parser.add_argument("--output", type=str, default="", help="output path of the d
 # parse parameters
 params = parser.parse_args()
 
-def load_vec(emb_path, nmax=50000):
+def load_vec(emb_path, nmax=500000):
     vectors = []
     word2id = {}
     with open(emb_path, 'r', encoding="utf-8") as f:
