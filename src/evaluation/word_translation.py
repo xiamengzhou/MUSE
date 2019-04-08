@@ -41,28 +41,30 @@ def load_identical_char_dico(word2id1, word2id2):
     return dico
 
 
-def load_dictionary(path, word2id1, word2id2):
+def load_dictionary(dico_train, word2id1, word2id2):
     """
     Return a torch tensor of size (n, 2) where n is the size of the
     loader dictionary, and sort it by source word frequency.
     """
-    assert os.path.isfile(path)
-
     pairs = []
     not_found = 0
     not_found1 = 0
     not_found2 = 0
+    not_lower = 0
+    for path in dico_train.split():
+        assert os.path.isfile(path)
 
-    with io.open(path, 'r', encoding='utf-8') as f:
-        for _, line in enumerate(f):
-            assert line == line.lower()
-            word1, word2 = line.rstrip().split()
-            if word1 in word2id1 and word2 in word2id2:
-                pairs.append((word1, word2))
-            else:
-                not_found += 1
-                not_found1 += int(word1 not in word2id1)
-                not_found2 += int(word2 not in word2id2)
+        with io.open(path, 'r', encoding='utf-8') as f:
+            for _, line in enumerate(f):
+                if line != line.lower():
+                    not_lower += 1
+                word1, word2 = line.rstrip().split()
+                if word1 in word2id1 and word2 in word2id2:
+                    pairs.append((word1, word2))
+                else:
+                    not_found += 1
+                    not_found1 += int(word1 not in word2id1)
+                    not_found2 += int(word2 not in word2id2)
 
     logger.info("Found %i pairs of words in the dictionary (%i unique). "
                 "%i other pairs contained at least one unknown word "
@@ -76,7 +78,6 @@ def load_dictionary(path, word2id1, word2id2):
     for i, (word1, word2) in enumerate(pairs):
         dico[i, 0] = word2id1[word1]
         dico[i, 1] = word2id2[word2]
-
     return dico
 
 
